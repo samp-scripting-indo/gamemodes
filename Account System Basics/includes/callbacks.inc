@@ -2,10 +2,13 @@
 
 hook OnScriptInit()
 {
-    // Initialize iteration for logged in players.
+    // Initialisasikan terlebih dahulu sebuah iterasinya
     Iter_Init(LoggedInPlayers);
 
-    // Initialize the system. (depends on storage method)
+    // Baru kita menginitialisasikan script utama
+    // bisa juga menggunakan timer jika ingin terlihat
+    // lebih singkron XD
+    
     InitAccountSystem();
     // SetTimer("InitAccountSystem", 2000, false);
 
@@ -19,20 +22,28 @@ hook OnScriptInit()
 
 hook OnScriptExit()
 {
+    //P:4 itu adalah sebuah fungsi print di YSI dengan security level 4 (debug)
     P:4("Start to save logged in's player data");
 
-    // Loop each logged in players.
+    // Disini kita menggunakan foreach a.k.a y_iterate
+    // foreach sangat bagus ketimbang menggunakan lainnya karena terbilang cukup
+    // unik seperti hanya mengembalikan nilai dengan lompat2.
+    
     foreach (new playerid : LoggedInPlayers)
     {
         P:4("Saving player data with Player ID: %i ...", playerid);
 
-        // Save each player's character that logged in and selected a character.
+        // Anggaplah disini player masih login, dan anda simpan data
+        // player yang tersedia fungsi ini, lalu kita bisa menambahkan
+        // sebuah variabel untuk mengambil nilai yang telah dikeluarkan oleh
+        // fungsi tersebut.
+        
         new saveable = SavePlayerCharacterData(playerid);
 
         P:4("Save player data with Player ID: %i result --> %i", saveable);
     }
 
-    // Close the connection to database.
+    // Kalau sudah tinggal di tutup saja sistemnya.
     CloseAccountSystem();
 
     return 1;
